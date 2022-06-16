@@ -26,7 +26,9 @@ class RedHatSignedRpmScanner(Actor):
                    '938a80caf21541eb',
                    'fd372689897da07a',
                    '45689c882fa658e0',
-                   '24c6a8a7f4a80eb5']
+                   '24c6a8a7f4a80eb5',
+                   '4eb84e71f2ee9d55',
+                   '8c55a6628608cb71']
 
         signed_pkgs = InstalledRedHatSignedRPM()
         unsigned_pkgs = InstalledUnsignedRPM()
@@ -49,9 +51,11 @@ class RedHatSignedRpmScanner(Actor):
             gpg-pubkey is not signed as it would require another package
             to verify its signature
             """
-            return (    # pylint: disable-msg=consider-using-ternary
+            return (
                     pkg.name == 'gpg-pubkey'
-                    and (pkg.packager.startswith('Red Hat, Inc.') or pkg.packager.startswith('CentOS'))
+                    and (pkg.packager.startswith('Red Hat, Inc.') or
+                         pkg.packager.startswith('CentOS') or
+                         pkg.packager.startswith('CloudLinux Packaging Team'))
                     or all_signed
             )
 
