@@ -41,7 +41,8 @@ class SetupTargetRepos(Actor):
     def process(self):
         custom_repos = []
         for repo in self.consume(CustomTargetRepository):
-            custom_repos.append(repo)
+            if repo.enabled:
+                custom_repos.append(repo)
 
         enabled_repos = set()
         for repos in self.consume(RepositoriesFacts):
