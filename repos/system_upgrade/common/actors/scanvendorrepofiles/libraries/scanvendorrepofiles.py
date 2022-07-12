@@ -37,9 +37,8 @@ def process(target_type="stable"):
                     "No active vendor list received, will not load the vendor package repository files"
                 )
             )
-        vendor_list = vendor_list.data
 
-        if vendor_name not in vendor_list:
+        if vendor_name not in vendor_list.data:
             api.current_logger().debug("Vendor {} not in active list, skipping".format(vendor_name))
             continue
 
