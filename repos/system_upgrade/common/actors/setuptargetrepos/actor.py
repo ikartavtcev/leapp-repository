@@ -43,7 +43,7 @@ class SetupTargetRepos(Actor):
         custom_repos = []
         for repo in self.consume(CustomTargetRepository):
             custom_repos.append(repo)
-            api.current_logger().debug("Adding repository to custom: {}".format(repo.dump()))
+            api.current_logger().debug("Adding repository to custom: {}".format(repo.name))
 
         enabled_repos = set()
         for repos in self.consume(RepositoriesFacts):
@@ -51,7 +51,7 @@ class SetupTargetRepos(Actor):
                 for repo in repo_file.data:
                     if repo.enabled:
                         enabled_repos.add(repo.repoid)
-                        api.current_logger().debug("Adding repository to enabled: {}".format(repo.dump()))
+                        api.current_logger().debug("Adding repository to enabled: {}".format(repo.repoid))
 
         rhel_repos = []
         mapped_repos = set()
@@ -70,7 +70,7 @@ class SetupTargetRepos(Actor):
                 mapped_repos.add(repo_map.from_repoid)
                 if repo_map.from_repoid in enabled_repos:
                     rhel_repos.append(RHELTargetRepository(repoid=repo_map.to_repoid))
-                    api.current_logger().debug("Adding repository to RHEL (mapped): {}".format(repo.dump()))
+                    api.current_logger().debug("Adding repository to RHEL (mapped): {}".format(repo_map.to_repoid))
 
         skipped_repos = enabled_repos.difference(mapped_repos)
 
@@ -79,7 +79,7 @@ class SetupTargetRepos(Actor):
             for used_repo in used_repos.repositories:
                 used[used_repo.repository] = used_repo.packages
                 for repo in repo_file.data:
-                    api.current_logger().debug("Adding repository to used: {}".format(repo.dump()))
+                    api.current_logger().debug("Adding repository to used: {}".format(repo.repoid))
                     enabled_repos.add(repo.repoid)
 
         # TODO(pstodulk): the part of the workaround mentioned above..
@@ -94,7 +94,7 @@ class SetupTargetRepos(Actor):
         for task in self.consume(RepositoriesSetupTasks):
             for repo in task.to_enable:
                 rhel_repos.append(RHELTargetRepository(repoid=repo))
-                api.current_logger().debug("Adding repository to RHEL (setup): {}".format(repo.dump()))
+                api.current_logger().debug("Adding repository to RHEL (setup): {}".format(repo))
 
         repos_blacklisted = set()
         for blacklist in self.consume(RepositoriesBlacklisted):
