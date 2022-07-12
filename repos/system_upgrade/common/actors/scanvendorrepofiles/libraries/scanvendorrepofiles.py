@@ -5,7 +5,7 @@ from leapp.libraries.stdlib import api
 from leapp.models import CustomTargetRepository, ActiveVendorList
 
 
-CUSTOM_REPO_DIR = "/etc/leapp/files/vendors.d/"
+VENDORS_DIR = "/etc/leapp/files/vendors.d/"
 
 
 def process(target_type="stable"):
@@ -16,15 +16,15 @@ def process(target_type="stable"):
     The CustomTargetRepository messages are produced only if a "from" vendor repository
     listed indide its map matched one of the repositories active on the system.
     """
-    if not os.path.isdir(CUSTOM_REPO_DIR):
+    if not os.path.isdir(VENDORS_DIR):
         api.current_logger().debug(
-            "The {} directory doesn't exist. Nothing to do.".format(CUSTOM_REPO_DIR)
+            "The {} directory doesn't exist. Nothing to do.".format(VENDORS_DIR)
         )
         return
 
     api.current_logger().debug("Current target system type: {}".format(target_type))
 
-    for reponame in os.listdir(CUSTOM_REPO_DIR):
+    for reponame in os.listdir(VENDORS_DIR):
         if not reponame.endswith(".repo"):
             continue
         # Cut the .repo part to get only the name.
@@ -39,11 +39,15 @@ def process(target_type="stable"):
             )
 
         if vendor_name not in vendor_list.data:
-            api.current_logger().debug("Vendor {} not in active list, skipping".format(vendor_name))
+            api.current_logger().debug(
+                "Vendor {} not in active list, skipping".format(vendor_name)
+            )
             continue
 
-        api.current_logger().debug("Vendor {} found in active list, processing file".format(vendor_name))
-        full_repo_path = os.path.join(CUSTOM_REPO_DIR, reponame)
+        api.current_logger().debug(
+            "Vendor {} found in active list, processing file".format(vendor_name)
+        )
+        full_repo_path = os.path.join(VENDORS_DIR, reponame)
         repofile = repofileutils.parse_repofile(full_repo_path)
 
         for repo in repofile.data:
@@ -57,5 +61,5 @@ def process(target_type="stable"):
             )
 
     api.current_logger().info(
-        "The {} directory exists, vendor repositories loaded.".format(CUSTOM_REPO_DIR)
+        "The {} directory exists, vendor repositories loaded.".format(VENDORS_DIR)
     )
