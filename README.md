@@ -1,4 +1,4 @@
-# CloudLinux Leapp Elevation
+# CloudLinux Leapp Elevation 
 
 **Before doing anything, please read
 [Leapp framework documentation](https://leapp.readthedocs.io/).**
@@ -6,7 +6,7 @@
 ## Running
 Make sure your system is fully updated before starting the elevation process.
 
-Download and execute the preparation script: https://raw.githubusercontent.com/prilr/leapp-repository/cloudlinux/utils/cl_elevate_prepare.sh
+Download and execute the preparation script: https://raw.githubusercontent.com/prilr/leapp-repository/hostinger/utils/cl_elevate_prepare.sh
 
 Start a preupgrade check. In the meanwhile, the Leapp utility creates a special /var/log/leapp/leapp-report.txt file that contains possible problems and recommended solutions. No rpm packages will be installed at this phase.
 
