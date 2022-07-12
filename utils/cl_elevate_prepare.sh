@@ -6,7 +6,7 @@ yum install -y leapp-upgrade leapp-data-almalinux
 git clone -b 3rd_parties --single-branch https://github.com/prilr/leapp-repository.git /root/leapp-repository
 
 rsync -a /root/leapp-repository/repos/system_upgrade /etc/leapp/repos.d/system_upgrade
-yes | cp -R /root/leapp-repository/repos/system_upgrade/cloudlinux /etc/leapp/repos.d/system_upgrade/cloudlinux
+/bin/cp -RT /root/leapp-repository/repos/system_upgrade/ /etc/leapp/repos.d/system_upgrade/
 
 yes | cp -R /etc/leapp/repos.d/system_upgrade/common/files/prod-certs/8.4 /etc/leapp/repos.d/system_upgrade/common/files/prod-certs/8.6
 
