@@ -8,7 +8,7 @@ from leapp.models import CustomTargetRepository, ActiveVendorList
 VENDORS_DIR = "/etc/leapp/files/vendors.d/"
 
 
-def process(target_type="stable"):
+def process():
     """
     Produce CustomTargetRepository msgs for the vendor repo files inside the
     <CUSTOM_REPO_DIR>.
@@ -21,8 +21,6 @@ def process(target_type="stable"):
             "The {} directory doesn't exist. Nothing to do.".format(VENDORS_DIR)
         )
         return
-
-    api.current_logger().debug("Current target system type: {}".format(target_type))
 
     for reponame in os.listdir(VENDORS_DIR):
         if not reponame.endswith(".repo"):
