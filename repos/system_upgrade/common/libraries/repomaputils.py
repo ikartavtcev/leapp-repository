@@ -76,8 +76,11 @@ def scan_repomaps(repomap_file, repomap_dir, read_repofile_func=read_or_fetch_re
     for line in read_repofile_func(repomap_file, repomap_dir)[1:]:
         line_num += 1
 
+        api.current_logger().debug("Grabbing line {} of file {}: \"{}\"".format(line_num, repomap_file, line))
+
         # skip empty lines and comments
         if not line or line.startswith("#"):
+            api.current_logger().debug("Line skipped")
             continue
 
         try:
@@ -99,6 +102,7 @@ def scan_repomaps(repomap_file, repomap_dir, read_repofile_func=read_or_fetch_re
                 or _exp_src_prod_type != src_prod_type
                 or _exp_dst_prod_type != dst_prod_type
             ):
+                api.current_logger().debug("Line filtered out")
                 continue
 
             repositories.append(
