@@ -20,6 +20,7 @@ mkdir /etc/leapp/repos.d/system_upgrade/common/actors/vendorrepositoriesmapping
 
 yes | mv -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/checkenabledvendorrepos/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/checkenabledvendorrepos/actor.py
 yes | mv -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/peseventsscanner/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/peseventsscanner/actor.py
+yes | mv -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/peseventsscanner/libraries/peseventsscanner.py /etc/leapp/repos.d/system_upgrade/common/actors/peseventsscanner/libraries/peseventsscanner.py
 yes | mv -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/repositoriesmapping/libraries/repositoriesmapping.py /etc/leapp/repos.d/system_upgrade/common/actors/repositoriesmapping/libraries/repositoriesmapping.py
 yes | mv -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/scanvendorrepofiles/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/scanvendorrepofiles/actor.py
 yes | mv -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/scanvendorrepofiles/libraries/scanvendorrepofiles.py /etc/leapp/repos.d/system_upgrade/common/actors/scanvendorrepofiles/libraries/scanvendorrepofiles.py
@@ -35,8 +36,8 @@ git clone -b 3rd_parties --single-branch https://github.com/prilr/leapp-data.git
 rsync -a /root/leapp-data/files/cloudlinux/ /etc/leapp/files/
 
 LEAPP_DEVEL_USE_PERSISTENT_PACKAGE_CACHE=1
+LEAPP_DEVEL_TARGET_PRODUCT_TYPE=ga
 # LEAPP_DEVEL_RPMS_ALL_SIGNED=1
-# LEAPP_DEVEL_TARGET_PRODUCT_TYPE=beta
 
 rmmod floppy pata_acpi btrfs
 echo PermitRootLogin yes | tee -a /etc/ssh/sshd_config
