@@ -105,8 +105,7 @@ def scan_repomaps(repomap_file, repomap_dir, read_repofile_func=read_or_fetch_re
                 api.current_logger().debug("Line filtered out")
                 continue
 
-            repositories.append(
-                RepositoryMap(
+            new_repo_map = RepositoryMap(
                     from_repoid=from_repoid,
                     to_repoid=to_repoid,
                     to_pes_repo=to_pes_repo,
@@ -115,7 +114,10 @@ def scan_repomaps(repomap_file, repomap_dir, read_repofile_func=read_or_fetch_re
                     arch=arch,
                     repo_type=repo_type,
                 )
-            )
+
+            api.current_logger().debug("Map added: {}".format(new_repo_map.dump()))
+            repositories.append(new_repo_map)
+
         except (ModelViolationError, ValueError) as err:
             _raise_error(
                 "The repository mapping file is invalid. It is possible the file is out of date.",
