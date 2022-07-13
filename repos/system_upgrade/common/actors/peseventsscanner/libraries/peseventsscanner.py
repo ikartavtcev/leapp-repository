@@ -177,7 +177,7 @@ def parse_pes_events(json_data):
     :return: List of Event tuples, where each event contains event type and input/output pkgs
     """
     data = json.loads(json_data)
-    if not isinstance(data, dict) or not data.get('packageinfo'):
+    if not isinstance(data, dict) or data.get('packageinfo') is None:
         raise ValueError('Found PES data with invalid structure')
 
     return [parse_entry(entry) for entry in data['packageinfo']]
