@@ -24,6 +24,8 @@ LEAPP_DEVEL_USE_PERSISTENT_PACKAGE_CACHE=1
 # LEAPP_DEVEL_TARGET_PRODUCT_TYPE=ga
 # LEAPP_DEVEL_RPMS_ALL_SIGNED=1
 
+mkdir -p /etc/leapp/files/vendors.d/
+
 rmmod floppy pata_acpi btrfs
 echo PermitRootLogin yes | tee -a /etc/ssh/sshd_config
 leapp answer --add --section remove_pam_pkcs11_module_check.confirm=True
