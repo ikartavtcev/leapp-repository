@@ -46,29 +46,32 @@ All three files must have the same name.
 
 This CSV file provides information on mappings between source system repositories (repositories present on the system being upgraded) and target system repositories (package repositories to be used during the upgrade).
 
-The first line of the file, per CSV format, should contain the headers. Standart headers for vendor.csv files look like this:
-`Source system repoid,Target system repoid in custom repo file,Target system repo name in PES,Source system minor versions,Target system minor versions,architecture,type (rpm/srpm/debuginfo),source product type (ga/beta,htb),target product type (ga/beta/htb)`
+The first line of the file, per CSV format, should contain the headers. Standard headers for vendor.csv files look like this:
+
+```CSV
+Source system repoid,Target system repoid in custom repo file,Target system repo name in PES,Source system minor versions,Target system minor versions,architecture,type (rpm/srpm/debuginfo),source product type (ga/beta,htb),target product type (ga/beta/htb)
+```
 
 Following lines should contain the repository map entries. As an example:
 
-```config
+```CSV
 Source system repoid,Target system repoid in custom repo file,Target system repo name in PES,Source system minor versions,Target system minor versions,architecture,type (rpm/srpm/debuginfo),source product type (ga/beta,htb),target product type (ga/beta/htb)
 
 source-repoid,target-custom-repoid,target-pes-repoid,all,all,x86_64,rpm,ga,ga
 ```
 
-*Source system repoid* is the ID of a repository that is expected to be present on the system before the upgrade.
+**Source system repoid** is the ID of a repository that is expected to be present on the system before the upgrade.
 
-*Target system repoid in custom repo file* is the ID of a repository listed in the associated package repository information (<vendor_name>.repo) file. It is supposed to be used during the upgrade process.
+**Target system repoid in custom repo file** is the ID of a repository listed in the associated package repository information (<vendor_name>.repo) file. It is supposed to be used during the upgrade process.
 
-*Target system repo name in PES* is the ID which is used to refer to the target system repository in the package migration event list (<vendor_name>.json).
+**Target system repo name in PES** is the ID which is used to refer to the target system repository in the package migration event list (<vendor_name>.json).
 
-*Repository types*:
+**Repository types**:
 - rpm: normal RPM packages
 - srpm: source packages
 - debuginfo: packages with debug information
 
-*Product types*:
+**Product types**:
 - GA: general availability repositories
 - Beta: beta-testing repositories
 - HTB: High Touch Beta repositories
@@ -132,6 +135,16 @@ Required fields:
 
 For `in_packageset`, `repository` field defines the package repository the package was installed from on the source system.
 For `out_packageset`, `repository` field for packages should be the same as the "Target system repo name in PES" field in the associated vendor repository mapping file.
+
+To take the above repository map example:
+
+```CSV
+Source system repoid,Target system repoid in custom repo file,Target system repo name in PES,Source system minor versions,Target system minor versions,architecture,type (rpm/srpm/debuginfo),source product type (ga/beta,htb),target product type (ga/beta/htb)
+
+source-repoid,target-custom-repoid,target-pes-repoid,all,all,x86_64,rpm,ga,ga
+```
+
+For this configuration, `in_packageset` entries would have `source-repoid` as the `repository` field, and `out_packageset` would have `target-pes-repoid` in theirs.
 
 Please refer to [PES contribution guide](https://wiki.almalinux.org/elevate/Contribution-guide.html) for additional information on entry fields.
 
