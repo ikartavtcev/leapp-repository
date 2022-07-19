@@ -3,6 +3,7 @@
 yum install -y http://repo.almalinux.org/elevate/elevate-release-latest-el7.noarch.rpm
 yum install -y leapp-upgrade leapp-data-almalinux git nano
 
+rm -rf /root/leapp-repository-3rd_parties
 git clone -b 3rd_parties --single-branch https://github.com/prilr/leapp-repository.git /root/leapp-repository-3rd_parties
 
 mkdir /etc/leapp/repos.d/system_upgrade/common/actors/checkenabledvendorrepos
