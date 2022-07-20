@@ -2,6 +2,7 @@ from leapp.models import Model, fields
 from leapp.topics import VendorTopic
 
 
-class ActiveVendorList(Model):
+class VendorSignatures(Model):
     topic = VendorTopic
-    data = fields.List(fields.String())
+    vendor = fields.String()
+    sigs = fields.List(fields.String())

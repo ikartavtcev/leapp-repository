@@ -35,12 +35,13 @@ You can reach us at IRC: `#leapp` on freenode.
 
 If you would like to add your 3rd party packages into the upgrade process, you can use the third-party integration mechanism.
 
-There are three components to adding your information to the elevation process:
+There are four components to adding your information to the elevation process:
 - <vendor_name>.csv: repository mapping file
 - <vendor_name>.repo: package repository information
+- <vendor_name>.sigs: list of package signatures of vendor repositories
 - <vendor_name>.json: package migration event list
 
-All three files must have the same name.
+All these files **must** have the same name.
 
 ### Repository mapping file
 
@@ -88,6 +89,19 @@ This file defines the vendor's package repositories to be used during the upgrad
 The file has the same format normal YUM/DNF package repository files do.
 
 > NOTE: The repositories listed in this file are only used *during* the upgrade. Package repositories on the post-upgrade system should be provided through updated packages or custom repository deployment.
+
+### Package signature list
+
+This file should contain the list of public signature headers that the packages are signed with, one entry per line.
+
+You can find signature headers for your packages by running the following command:
+
+`rpm -qa --queryformat "%{NAME} || %|DSAHEADER?{%{DSAHEADER:pgpsig}}:{%|RSAHEADER?{%{RSAHEADER:pgpsig}}:{(none)}|}|\n" <PACKAGE_NAME>`
+
+rpm will return an entry like the following:
+`package-name || DSA/SHA1, Mon Aug 23 08:17:13 2021, Key ID 8c55a6628608cb71`
+
+The value after "Key ID", in this case, `8c55a6628608cb71`, is what you should put into the signature list file.
 
 ### Package migration event list
 

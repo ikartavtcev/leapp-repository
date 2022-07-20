@@ -6,6 +6,7 @@ from leapp.models import CustomTargetRepository, ActiveVendorList
 
 
 VENDORS_DIR = "/etc/leapp/files/vendors.d/"
+REPOFILE_SUFFIX = ".repo"
 
 
 def process():
@@ -23,7 +24,7 @@ def process():
         return
 
     for reponame in os.listdir(VENDORS_DIR):
-        if not reponame.endswith(".repo"):
+        if not reponame.endswith(REPOFILE_SUFFIX):
             continue
         # Cut the .repo part to get only the name.
         vendor_name = reponame[:-5]

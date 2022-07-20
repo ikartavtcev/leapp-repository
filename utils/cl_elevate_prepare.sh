@@ -19,9 +19,10 @@ yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/actors
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/actor.py /etc/leapp/repos.d/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/actor.py
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/tools/nm-update-client-ids.py /etc/leapp/repos.d/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/tools/nm-update-client-ids.py
 
-mkdir /etc/leapp/repos.d/system_upgrade/common/actors/checkenabledvendorrepos
+mkdir -p /etc/leapp/repos.d/system_upgrade/common/actors/checkenabledvendorrepos
 mkdir -p /etc/leapp/repos.d/system_upgrade/common/actors/scanvendorrepofiles/libraries
-mkdir /etc/leapp/repos.d/system_upgrade/common/actors/vendorrepositoriesmapping
+mkdir -p /etc/leapp/repos.d/system_upgrade/common/actors/vendorrepositoriesmapping
+mkdir -p /etc/leapp/repos.d/system_upgrade/common/actors/vendorreposignaturescanner
 
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/checkenabledvendorrepos/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/checkenabledvendorrepos/actor.py
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/peseventsscanner/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/peseventsscanner/actor.py
@@ -33,6 +34,9 @@ yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actor
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/libraries/repomaputils.py /etc/leapp/repos.d/system_upgrade/common/libraries/repomaputils.py
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/models/activevendorlist.py /etc/leapp/repos.d/system_upgrade/common/models/activevendorlist.py
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/models/repositoriesmap.py /etc/leapp/repos.d/system_upgrade/common/models/repositoriesmap.py
+yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/vendorreposignaturescanner/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/vendorreposignaturescanner/actor.py
+yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/models/vendorsignatures.py /etc/leapp/repos.d/system_upgrade/common/models/vendorsignatures.py
+yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/topics/vendortopic.py /etc/leapp/repos.d/system_upgrade/common/topics/vendortopic.py
 
 yes | cp -R /etc/leapp/repos.d/system_upgrade/common/files/prod-certs/8.4 /etc/leapp/repos.d/system_upgrade/common/files/prod-certs/8.6
 yes | cp -R /root/leapp-repository-cloudlinux/repos/system_upgrade/cloudlinux /etc/leapp/repos.d/system_upgrade/cloudlinux
