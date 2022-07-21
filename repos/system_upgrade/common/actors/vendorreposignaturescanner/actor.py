@@ -39,15 +39,15 @@ class VendorRepoSignatureScanner(Actor):
             # Cut the suffix part to get only the name.
             vendor_name = sigfile_name[:-5]
 
-            vendor_list = next(self.consume(ActiveVendorList), None)
-            if not vendor_list:
-                self.log.info(
-                    (
-                        "No active vendor list received, will not load the vendor signature files"
-                    )
-                )
+            active_vendors = []
+            for vendor_list in self.consume(ActiveVendorList):
+                active_vendors.extend(vendor_list.data)
 
-            if vendor_name not in vendor_list.data:
+            self.log.debug(
+                "Active vendor list: {}".format(active_vendors)
+            )
+
+            if vendor_name not in active_vendors:
                 self.log.debug(
                     "Vendor {} not in active list, skipping".format(vendor_name)
                 )

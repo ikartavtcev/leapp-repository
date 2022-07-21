@@ -41,19 +41,13 @@ class PesEventsScanner(Actor):
     def process(self):
         pes_events_scanner(LEAPP_FILES_DIR, "pes-events.json")
 
-        vendor_list = next(self.consume(ActiveVendorList), None)
-
-        if not vendor_list:
-            self.log.info(
-                (
-                    "No active vendor list received, will not load vendor PES events"
-                )
-            )
-            return
+        active_vendors = []
+        for vendor_list in self.consume(ActiveVendorList):
+            active_vendors.extend(vendor_list.data)
 
         if os.path.isdir(VENDORS_DIR):
             vendor_pesfiles = list(filter(lambda vfile: ".json" in vfile, os.listdir(VENDORS_DIR)))
 
             for pesfile in vendor_pesfiles:
-                if pesfile[:-5] in vendor_list.data:
+                if pesfile[:-5] in active_vendors:
                     pes_events_scanner(VENDORS_DIR, pesfile)

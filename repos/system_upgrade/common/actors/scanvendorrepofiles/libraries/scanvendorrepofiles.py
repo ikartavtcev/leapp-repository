@@ -29,15 +29,15 @@ def process():
         # Cut the .repo part to get only the name.
         vendor_name = reponame[:-5]
 
-        vendor_list = next(api.consume(ActiveVendorList), None)
-        if not vendor_list:
-            api.current_logger().info(
-                (
-                    "No active vendor list received, will not load the vendor package repository files"
-                )
-            )
+        active_vendors = []
+        for vendor_list in api.consume(ActiveVendorList):
+            active_vendors.extend(vendor_list.data)
 
-        if vendor_name not in vendor_list.data:
+        api.current_logger().debug(
+            "Active vendor list: {}".format(active_vendors)
+        )
+
+        if vendor_name not in active_vendors:
             api.current_logger().debug(
                 "Vendor {} not in active list, skipping".format(vendor_name)
             )
