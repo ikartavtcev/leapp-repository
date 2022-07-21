@@ -18,6 +18,7 @@ yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/actors
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/actors/setuptargetrepos/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/setuptargetrepos/actor.py
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/actor.py /etc/leapp/repos.d/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/actor.py
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/tools/nm-update-client-ids.py /etc/leapp/repos.d/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/tools/nm-update-client-ids.py
+yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/libraries/dnfplugin.py /etc/leapp/repos.d/system_upgrade/common/libraries/dnfplugin.py
 
 mkdir -p /etc/leapp/repos.d/system_upgrade/common/actors/checkenabledvendorrepos
 mkdir -p /etc/leapp/repos.d/system_upgrade/common/actors/scanvendorrepofiles/libraries
