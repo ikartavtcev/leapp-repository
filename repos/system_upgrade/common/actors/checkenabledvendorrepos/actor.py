@@ -33,8 +33,21 @@ class CheckEnabledVendorRepos(Actor):
         for repos in api.consume(RepositoriesFacts):
             for repo_file in repos.repositories:
                 for repo in repo_file.data:
+                    self.log.debug(
+                        "Looking for repository {} in vendor maps".format(repo.repoid)
+                    )
                     if repo.repoid in vendor_mapping_data:
                         # If the vendor's repository is present in the system, count the vendor as active.
-                        active_vendors.append(vendor_mapping_data[repo.repoid])
+                        new_vendor = vendor_mapping_data[repo.repoid]
+                        self.log.debug(
+                            "Repository {} found, enabling vendor {}".format(
+                                repo.repoid, new_vendor
+                            )
+                        )
+                        active_vendors.append(new_vendor)
 
-        api.produce(ActiveVendorList(data=active_vendors))
+        if active_vendors:
+            self.log.debug("Active vendor list: {}".format(active_vendors))
+            api.produce(ActiveVendorList(data=active_vendors))
+        else:
+            self.log.info("No active vendors found, vendor list not generated")
