@@ -15,7 +15,7 @@ class VendorRepoSignatureScanner(Actor):
     """
 
     name = 'vendor_repo_signature_scanner'
-    consumes = ()
+    consumes = (ActiveVendorList)
     produces = (VendorSignatures)
     tags = (FactsPhaseTag.After, IPUWorkflowTag)
 
