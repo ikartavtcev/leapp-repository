@@ -2,7 +2,7 @@ import os
 
 from leapp.libraries.common import repofileutils
 from leapp.libraries.stdlib import api
-from leapp.models import CustomTargetRepository, ActiveVendorList
+from leapp.models import CustomTargetRepository, CustomTargetRepositoryFile, ActiveVendorList
 
 
 VENDORS_DIR = "/etc/leapp/files/vendors.d/"
@@ -49,6 +49,7 @@ def process():
         full_repo_path = os.path.join(VENDORS_DIR, reponame)
         repofile = repofileutils.parse_repofile(full_repo_path)
 
+        api.produce(CustomTargetRepositoryFile(file=full_repo_path))
         for repo in repofile.data:
             api.produce(
                 CustomTargetRepository(
