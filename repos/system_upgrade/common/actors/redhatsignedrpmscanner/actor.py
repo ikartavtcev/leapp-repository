@@ -59,7 +59,7 @@ class VendorSignedRpmScanner(Actor):
         ]
 
         def has_vendorsig(pkg):
-            return any(key in pkg.pgpsig for key in vendor_keys)
+            return pkg.pgpsig in vendor_keys
 
         def is_gpg_pubkey(pkg):
             """Check if gpg-pubkey pkg exists or LEAPP_DEVEL_RPMS_ALL_SIGNED=1
