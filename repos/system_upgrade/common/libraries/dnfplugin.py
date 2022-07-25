@@ -327,13 +327,14 @@ def perform_transaction_check(target_userspace_info, used_repos, tasks, xfs_info
             )
 
 
-def _prepare_channel(context):
-    # up2date_config = '/etc/sysconfig/rhn/up2date'
-    # channel_check = ['/usr/sbin/rhn-channel', '-l']
+def prepare_channel(context):
+    import subprocess
+    up2date_config = '/etc/sysconfig/rhn/up2date'
+    channel_check = ['/usr/sbin/rhn-channel', '-l']
     channel_reg = ['/usr/sbin/rhnreg_ks', '--force', '--serverUrl=https://xmlrpc.cln-staging.cloudlinux.com/XMLRPC/', '--activationkey=IPL']
     update_release = ['yum', 'update', '-y', 'cloudlinux-release']
-    context.call(channel_reg)
-    context.call(update_release)
+    subprocess.call(channel_reg)
+    subprocess.call(update_release)
 
 
 def perform_rpm_download(target_userspace_info, used_repos, tasks, xfs_info, storage_info, plugin_info, on_aws=False):
@@ -346,7 +347,7 @@ def perform_rpm_download(target_userspace_info, used_repos, tasks, xfs_info, sto
         with overlaygen.create_source_overlay(mounts_dir=userspace_info.mounts, scratch_dir=userspace_info.scratch,
                                               xfs_info=xfs_info, storage_info=storage_info,
                                               mount_target=os.path.join(context.base_dir, 'installroot')) as overlay:
-            _prepare_channel(context)
+            prepare_channel(context)
             _apply_yum_workaround(overlay.nspawn())
             dnfconfig.exclude_leapp_rpms(context)
             _transaction(
