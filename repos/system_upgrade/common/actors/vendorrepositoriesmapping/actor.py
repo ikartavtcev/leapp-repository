@@ -13,7 +13,7 @@ class VendorRepositoriesMapping(Actor):
     name = "vendor_repositories_mapping"
     consumes = ()
     produces = (VendorRepositoriesMapCollection,)
-    tags = (IPUWorkflowTag, FactsPhaseTag.Before)
+    tags = (IPUWorkflowTag, FactsPhaseTag)
 
     def process(self):
         vendor_repomap_collection = scan_vendor_repomaps(VENDOR_REPOMAP_DIR)

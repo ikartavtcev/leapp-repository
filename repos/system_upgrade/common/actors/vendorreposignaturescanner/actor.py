@@ -17,7 +17,7 @@ class VendorRepoSignatureScanner(Actor):
     name = 'vendor_repo_signature_scanner'
     consumes = (ActiveVendorList)
     produces = (VendorSignatures)
-    tags = (FactsPhaseTag.After, IPUWorkflowTag)
+    tags = (FactsPhaseTag, IPUWorkflowTag)
 
     def process(self):
         """
@@ -59,7 +59,7 @@ class VendorRepoSignatureScanner(Actor):
 
             full_sigfile_path = os.path.join(VENDORS_DIR, sigfile_name)
             with open(full_sigfile_path) as f:
-                signatures = f.read().splitlines()
+                signatures = [line for line in f.read().splitlines() if line]
 
             self.produce(
                 VendorSignatures(

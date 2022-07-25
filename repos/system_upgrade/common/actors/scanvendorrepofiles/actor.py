@@ -6,7 +6,9 @@ from leapp.libraries.stdlib import api
 
 
 class ScanVendorRepofiles(Actor):
-    """ """
+    """
+    No documentation has been provided for the scan_vendor_repofiles actor.
+    """
 
     name = "scan_vendor_repofiles"
     consumes = (ActiveVendorList)
