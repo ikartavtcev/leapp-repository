@@ -3,7 +3,7 @@ from leapp.models import (
     InstalledRedHatSignedRPM,
     InstalledRPM,
     InstalledUnsignedRPM,
-    VendorSignatures
+    VendorSignatures,
 )
 from leapp.tags import FactsPhaseTag, IPUWorkflowTag
 from leapp.libraries.common import rhui
@@ -22,9 +22,9 @@ VENDOR_SIGS = {
 }
 
 VENDOR_PACKAGERS = {
-    'rhel': 'Red Hat, Inc.',
-    'centos': 'CentOS',
-    'cloudlinux': 'CloudLinux Packaging Team'
+    "rhel": "Red Hat, Inc.",
+    "centos": "CentOS",
+    "cloudlinux": "CloudLinux Packaging Team",
 }
 
 
@@ -35,18 +35,23 @@ class VendorSignedRpmScanner(Actor):
     with relevant data will be produced.
     """
 
-    name = 'vendor_signed_rpm_scanner'
+    name = "vendor_signed_rpm_scanner"
     consumes = (InstalledRPM, VendorSignatures)
-    produces = (InstalledRedHatSignedRPM, InstalledUnsignedRPM,)
+    produces = (
+        InstalledRedHatSignedRPM,
+        InstalledUnsignedRPM,
+    )
     tags = (IPUWorkflowTag, FactsPhaseTag)
 
     def process(self):
         vendor = self.configuration.os_release.release_id
-        vendor_keys = VENDOR_SIGS.get(vendor, [])
-        vendor_packager = VENDOR_PACKAGERS.get(vendor, 'not-available')
+        vendor_keys = sum(VENDOR_SIGS.values(), [])
+        vendor_packager = VENDOR_PACKAGERS.get(vendor, "not-available")
 
         for siglist in self.consume(VendorSignatures):
             vendor_keys.extend(siglist.sigs)
+
+        self.log.debug("Signature list: {}".format(vendor_keys))
 
         signed_pkgs = InstalledRedHatSignedRPM()
         unsigned_pkgs = InstalledUnsignedRPM()
@@ -57,11 +62,11 @@ class VendorSignedRpmScanner(Actor):
         all_signed = [
             env
             for env in env_vars
-            if env.name == 'LEAPP_DEVEL_RPMS_ALL_SIGNED' and env.value == '1'
+            if env.name == "LEAPP_DEVEL_RPMS_ALL_SIGNED" and env.value == "1"
         ]
 
         def has_vendorsig(pkg):
-            return pkg.pgpsig in vendor_keys
+            return any(key in pkg.pgpsig for key in vendor_keys)
 
         def is_gpg_pubkey(pkg):
             """Check if gpg-pubkey pkg exists or LEAPP_DEVEL_RPMS_ALL_SIGNED=1
@@ -69,22 +74,22 @@ class VendorSignedRpmScanner(Actor):
             gpg-pubkey is not signed as it would require another package
             to verify its signature
             """
-            return (    # pylint: disable-msg=consider-using-ternary
-                    pkg.name == 'gpg-pubkey'
-                    and (pkg.packager.startswith(vendor_packager))
-                    or all_signed
+            return (  # pylint: disable-msg=consider-using-ternary
+                pkg.name == "gpg-pubkey"
+                and (pkg.packager.startswith(vendor_packager))
+                or all_signed
             )
 
         def has_katello_prefix(pkg):
             """Whitelist the katello package."""
-            return pkg.name.startswith('katello-ca-consumer')
+            return pkg.name.startswith("katello-ca-consumer")
 
         def is_azure_pkg(pkg):
             """Whitelist Azure config package."""
             arch = self.configuration.architecture
 
-            el7_pkg = rhui.RHUI_CLOUD_MAP[arch]['azure']['el7_pkg']
-            el8_pkg = rhui.RHUI_CLOUD_MAP[arch]['azure']['el8_pkg']
+            el7_pkg = rhui.RHUI_CLOUD_MAP[arch]["azure"]["el7_pkg"]
+            el8_pkg = rhui.RHUI_CLOUD_MAP[arch]["azure"]["el8_pkg"]
             return pkg.name in [el7_pkg, el8_pkg]
 
         for rpm_pkgs in self.consume(InstalledRPM):
@@ -98,9 +103,17 @@ class VendorSignedRpmScanner(Actor):
                     ]
                 ):
                     signed_pkgs.items.append(pkg)
+                    self.log.debug(
+                        "Package {} is signed, packager: {}, signature: {}".format(
+                            pkg.name, pkg.packager, pkg.pgpsig
+                        )
+                    )
                     continue
 
                 unsigned_pkgs.items.append(pkg)
+                self.log.debug(
+                    "Package {} is unsigned, packager: {}, signature: {}".format(pkg.name, pkg.packager, pkg.pgpsig)
+                )
 
         self.produce(signed_pkgs)
         self.produce(unsigned_pkgs)
