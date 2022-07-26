@@ -13,7 +13,7 @@ class ScanVendorRepofiles(Actor):
     name = "scan_vendor_repofiles"
     consumes = (ActiveVendorList)
     produces = (CustomTargetRepository, CustomTargetRepositoryFile)
-    tags = (FactsPhaseTag.After, IPUWorkflowTag)
+    tags = (FactsPhaseTag, IPUWorkflowTag)
 
     def process(self):
         scanvendorrepofiles.process()

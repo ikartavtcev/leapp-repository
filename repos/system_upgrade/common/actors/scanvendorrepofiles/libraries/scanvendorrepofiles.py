@@ -51,6 +51,9 @@ def process():
 
         api.produce(CustomTargetRepositoryFile(file=full_repo_path))
         for repo in repofile.data:
+            api.current_logger().debug(
+                "Loaded repository {} from file {}".format(repo.repoid, reponame)
+            )
             api.produce(
                 CustomTargetRepository(
                     repoid=repo.repoid,
