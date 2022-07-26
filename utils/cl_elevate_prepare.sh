@@ -38,6 +38,7 @@ yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/model
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/vendorreposignaturescanner/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/vendorreposignaturescanner/actor.py
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/models/vendorsignatures.py /etc/leapp/repos.d/system_upgrade/common/models/vendorsignatures.py
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/topics/vendortopic.py /etc/leapp/repos.d/system_upgrade/common/topics/vendortopic.py
+yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/systemfacts/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/systemfacts/actor.py
 
 yes | cp -R /etc/leapp/repos.d/system_upgrade/common/files/prod-certs/8.4 /etc/leapp/repos.d/system_upgrade/common/files/prod-certs/8.6
 yes | cp -R /root/leapp-repository-cloudlinux/repos/system_upgrade/cloudlinux /etc/leapp/repos.d/system_upgrade/cloudlinux

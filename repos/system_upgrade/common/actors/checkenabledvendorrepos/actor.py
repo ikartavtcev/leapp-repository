@@ -15,8 +15,8 @@ class CheckEnabledVendorRepos(Actor):
 
     name = "check_enabled_vendor_repos"
     consumes = (RepositoriesFacts, VendorRepositoriesMapCollection)
-    produces = ActiveVendorList
-    tags = (FactsPhaseTag, IPUWorkflowTag)
+    produces = (ActiveVendorList)
+    tags = (IPUWorkflowTag, FactsPhaseTag.Before)
 
     def process(self):
         vendor_mapping_data = {}

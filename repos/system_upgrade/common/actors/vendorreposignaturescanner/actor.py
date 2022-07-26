@@ -17,7 +17,7 @@ class VendorRepoSignatureScanner(Actor):
     name = 'vendor_repo_signature_scanner'
     consumes = (ActiveVendorList)
     produces = (VendorSignatures)
-    tags = (FactsPhaseTag, IPUWorkflowTag)
+    tags = (IPUWorkflowTag, FactsPhaseTag.Before)
 
     def process(self):
         """
