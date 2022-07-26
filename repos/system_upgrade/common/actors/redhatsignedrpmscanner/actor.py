@@ -18,11 +18,13 @@ VENDOR_SIGS = {
     'centos': ['24c6a8a7f4a80eb5',
                '05b555b38483c65d',
                '4eb84e71f2ee9d55'],
+    'cloudlinux': ['8c55a6628608cb71']
 }
 
 VENDOR_PACKAGERS = {
     'rhel': 'Red Hat, Inc.',
     'centos': 'CentOS',
+    'cloudlinux': 'CloudLinux Packaging Team'
 }
 
 

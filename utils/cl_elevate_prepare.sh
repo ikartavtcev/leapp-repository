@@ -11,7 +11,6 @@ git clone -b 3rd_parties --single-branch https://github.com/prilr/leapp-reposito
 
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/libraries/config/version.py /etc/leapp/repos.d/system_upgrade/common/libraries/config/version.py
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/actors/ipuworkflowconfig/libraries/ipuworkflowconfig.py /etc/leapp/repos.d/system_upgrade/common/actors/ipuworkflowconfig/libraries/ipuworkflowconfig.py
-yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/actors/redhatsignedrpmscanner/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/redhatsignedrpmscanner/actor.py
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/models/targetsystemtype.py /etc/leapp/repos.d/system_upgrade/common/models/targetsystemtype.py
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/actors/scancustomrepofile/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/scancustomrepofile/actor.py
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/actors/scancustomrepofile/libraries/scancustomrepofile.py /etc/leapp/repos.d/system_upgrade/common/actors/scancustomrepofile/libraries/scancustomrepofile.py
@@ -39,6 +38,7 @@ yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actor
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/models/vendorsignatures.py /etc/leapp/repos.d/system_upgrade/common/models/vendorsignatures.py
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/topics/vendortopic.py /etc/leapp/repos.d/system_upgrade/common/topics/vendortopic.py
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/systemfacts/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/systemfacts/actor.py
+yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/redhatsignedrpmscanner/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/redhatsignedrpmscanner/actor.py
 
 yes | cp -R /etc/leapp/repos.d/system_upgrade/common/files/prod-certs/8.4 /etc/leapp/repos.d/system_upgrade/common/files/prod-certs/8.6
 yes | cp -R /root/leapp-repository-cloudlinux/repos/system_upgrade/cloudlinux /etc/leapp/repos.d/system_upgrade/cloudlinux
