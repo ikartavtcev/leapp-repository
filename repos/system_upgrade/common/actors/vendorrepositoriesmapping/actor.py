@@ -1,8 +1,7 @@
 from leapp.actors import Actor
 from leapp.libraries.common.repomaputils import scan_vendor_repomaps, VENDOR_REPOMAP_DIR
-from leapp.models import VendorRepositoriesMapCollection
+from leapp.models import VendorRepositoriesMapCollection, RepositoriesMap
 from leapp.tags import FactsPhaseTag, IPUWorkflowTag
-from leapp.libraries.stdlib import api
 
 
 class VendorRepositoriesMapping(Actor):
@@ -12,9 +11,11 @@ class VendorRepositoriesMapping(Actor):
 
     name = "vendor_repositories_mapping"
     consumes = ()
-    produces = (VendorRepositoriesMapCollection,)
+    produces = (RepositoriesMap, VendorRepositoriesMapCollection,)
     tags = (IPUWorkflowTag, FactsPhaseTag.Before)
 
     def process(self):
         vendor_repomap_collection = scan_vendor_repomaps(VENDOR_REPOMAP_DIR)
-        api.produce(vendor_repomap_collection)
+        self.produce(vendor_repomap_collection)
+        for repomap in vendor_repomap_collection.maps:
+            self.produce(repomap)

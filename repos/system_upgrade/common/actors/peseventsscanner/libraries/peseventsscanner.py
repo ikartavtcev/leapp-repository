@@ -91,19 +91,16 @@ def _get_repositories_mapping():
     """
     repositories_mapping = {}
 
-    repositories_map_msgs = api.consume(RepositoriesMap)
-    repositories_map_msg = next(repositories_map_msgs, None)
-    if list(repositories_map_msgs):
-        api.current_logger().warning('Unexpectedly received more than one RepositoriesMap message.')
-    if not repositories_map_msg:
-        raise StopActorExecutionError(
-            'Cannot parse RepositoriesMap data properly',
-            details={'Problem': 'Did not receive a message with mapped repositories'}
-        )
+    for repositories_map_msg in api.consume(RepositoriesMap):
+        if not repositories_map_msg:
+            raise StopActorExecutionError(
+                'Cannot parse RepositoriesMap data from file {} properly'.format(repositories_map_msg.file),
+                details={'Problem': 'Did not receive a message with mapped repositories'}
+            )
 
-    for repository in repositories_map_msg.repositories:
-        if repository.arch == api.current_actor().configuration.architecture:
-            repositories_mapping[repository.to_pes_repo] = repository.to_repoid
+        for repository in repositories_map_msg.repositories:
+            if repository.arch == api.current_actor().configuration.architecture:
+                repositories_mapping[repository.to_pes_repo] = repository.to_repoid
 
     return repositories_mapping
 
