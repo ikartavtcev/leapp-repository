@@ -3,6 +3,7 @@ import itertools
 import json
 import os
 import shutil
+import six
 
 from leapp.exceptions import StopActorExecutionError
 from leapp.libraries.common import dnfconfig, guards, mounting, overlaygen, rhsm, utils
@@ -193,7 +194,8 @@ def _transaction(context, stage, target_repoids, tasks, plugin_info, test=False,
             api.current_logger().error('DNF execution failed: ')
             raise StopActorExecutionError(
                 message='DNF execution failed with non zero exit code.\nSTDOUT:\n{stdout}\nSTDERR:\n{stderr}'.format(
-                    stdout=e.stdout, stderr=e.stderr)
+                        stdout=six.ensure_str(e.stdout, 'ascii'), stderr=six.ensure_str(e.stderr, 'ascii')
+                    )
             )
         finally:
             if stage == 'check':
@@ -327,6 +329,16 @@ def perform_transaction_check(target_userspace_info, used_repos, tasks, xfs_info
             )
 
 
+def _prepare_channel(context):
+    import subprocess
+    up2date_config = '/etc/sysconfig/rhn/up2date'
+    channel_check = ['/usr/sbin/rhn-channel', '-l']
+    channel_reg = ['/usr/sbin/rhnreg_ks', '--force', '--serverUrl=https://xmlrpc.cln-staging.cloudlinux.com/XMLRPC/', '--activationkey=IPL']
+    update_release = ['yum', 'update', '-y', 'cloudlinux-release']
+    subprocess.call(channel_reg)
+    subprocess.call(update_release)
+
+
 def perform_rpm_download(target_userspace_info, used_repos, tasks, xfs_info, storage_info, plugin_info, on_aws=False):
     """
     Perform RPM download including the transaction test using dnf with our plugin
@@ -337,6 +349,7 @@ def perform_rpm_download(target_userspace_info, used_repos, tasks, xfs_info, sto
         with overlaygen.create_source_overlay(mounts_dir=userspace_info.mounts, scratch_dir=userspace_info.scratch,
                                               xfs_info=xfs_info, storage_info=storage_info,
                                               mount_target=os.path.join(context.base_dir, 'installroot')) as overlay:
+            _prepare_channel(context)
             _apply_yum_workaround(overlay.nspawn())
             dnfconfig.exclude_leapp_rpms(context)
             _transaction(

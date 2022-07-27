@@ -16,7 +16,6 @@ yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/actors
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/actors/scancustomrepofile/libraries/scancustomrepofile.py /etc/leapp/repos.d/system_upgrade/common/actors/scancustomrepofile/libraries/scancustomrepofile.py
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/actor.py /etc/leapp/repos.d/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/actor.py
 yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/tools/nm-update-client-ids.py /etc/leapp/repos.d/system_upgrade/el7toel8/actors/networkmanagerupdateconnections/tools/nm-update-client-ids.py
-yes | cp -f /root/leapp-repository-cloudlinux/repos/system_upgrade/common/libraries/dnfplugin.py /etc/leapp/repos.d/system_upgrade/common/libraries/dnfplugin.py
 
 mkdir -p /etc/leapp/repos.d/system_upgrade/common/actors/checkenabledvendorrepos
 mkdir -p /etc/leapp/repos.d/system_upgrade/common/actors/scanvendorrepofiles/libraries
@@ -39,6 +38,7 @@ yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/topic
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/systemfacts/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/systemfacts/actor.py
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/redhatsignedrpmscanner/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/redhatsignedrpmscanner/actor.py
 yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/actors/setuptargetrepos/actor.py /etc/leapp/repos.d/system_upgrade/common/actors/setuptargetrepos/actor.py
+yes | cp -f /root/leapp-repository-3rd_parties/repos/system_upgrade/common/libraries/dnfplugin.py /etc/leapp/repos.d/system_upgrade/common/libraries/dnfplugin.py
 
 yes | cp -R /etc/leapp/repos.d/system_upgrade/common/files/prod-certs/8.4 /etc/leapp/repos.d/system_upgrade/common/files/prod-certs/8.6
 yes | cp -R /root/leapp-repository-cloudlinux/repos/system_upgrade/cloudlinux /etc/leapp/repos.d/system_upgrade/cloudlinux
