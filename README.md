@@ -33,15 +33,15 @@ You can reach us at IRC: `#leapp` on freenode.
 
 ## Third-party integration
 
-If you would like to add your 3rd party packages into the upgrade process, you can use the third-party integration mechanism.
+If you would like to add your **signed** 3rd party packages into the upgrade process, you can use the third-party integration mechanism.
 
-There are four components to adding your information to the elevation process:
+There are four components for adding your information to the elevation process:
 - <vendor_name>.csv: repository mapping file
 - <vendor_name>.repo: package repository information
 - <vendor_name>.sigs: list of package signatures of vendor repositories
 - <vendor_name>.json: package migration event list
 
-All these files **must** have the same name.
+All these files **must** have the same <vendor_name> part.
 
 ### Repository mapping file
 
@@ -108,6 +108,7 @@ The value after "Key ID", in this case, `8c55a6628608cb71`, is what you should p
 The Leapp upgrade process uses information from the AlmaLinux PES (Package Evolution System) to keep track of how packages change between the OS versions. This data is located in `leapp-data/files/<target_system>/vendors.d/<vendor_name>.json` in the GitHub repository and in `/etc/leapp/files/vendors.d/<vendor_name>.json` on a system being upgraded.
 
 To add new rules to the list, add a new entry to the `packageinfo` array.
+**Important**: actions from PES json files will be in effect only for those packages that are signed **and** have their signatures in one of the active <vendor_name>.sigs files. Unsigned packages will be updated only if some signed package requires a new version, otherwise they will by left as they are.
 
 Required fields:
 
@@ -149,6 +150,7 @@ Required fields:
 
 For `in_packageset`, `repository` field defines the package repository the package was installed from on the source system.
 For `out_packageset`, `repository` field for packages should be the same as the "Target system repo name in PES" field in the associated vendor repository mapping file.
+Warning: leapp doesn't force packages from out_packageset to be installed from the specific repository; instead, it enables repo from out_packageset and then dnf installs the latest package version from all enabled repos.
 
 To take the above repository map example:
 
