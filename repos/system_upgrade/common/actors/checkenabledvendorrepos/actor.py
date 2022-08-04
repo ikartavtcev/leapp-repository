@@ -10,7 +10,9 @@ from leapp.tags import FactsPhaseTag, IPUWorkflowTag
 
 class CheckEnabledVendorRepos(Actor):
     """
-    No documentation has been provided for the check_enabled_vendor_repos actor.
+    Create a list of vendors whose repositories are present on the system.
+    Only those vendors' configurations (new repositories, PES actions, etc.)
+    will be included in the upgrade process.
     """
 
     name = "check_enabled_vendor_repos"

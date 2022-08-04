@@ -11,7 +11,11 @@ SIGFILE_SUFFIX = ".sigs"
 
 class VendorRepoSignatureScanner(Actor):
     """
-    No documentation has been provided for the vendor_repo_signature_scanner actor.
+    Produce VendorSignatures msgs for the vendor signature files inside the
+    <VENDORS_DIR>.
+
+    The messages are produced only if a "from" vendor repository
+    listed indide its map matched one of the repositories active on the system.
     """
 
     name = 'vendor_repo_signature_scanner'
@@ -20,13 +24,6 @@ class VendorRepoSignatureScanner(Actor):
     tags = (IPUWorkflowTag, FactsPhaseTag.Before)
 
     def process(self):
-        """
-        Produce VendorSignatures msgs for the vendor signature files inside the
-        <CUSTOM_REPO_DIR>.
-
-        The messages are produced only if a "from" vendor repository
-        listed indide its map matched one of the repositories active on the system.
-        """
         if not os.path.isdir(VENDORS_DIR):
             self.log.debug(
                 "The {} directory doesn't exist. Nothing to do.".format(VENDORS_DIR)

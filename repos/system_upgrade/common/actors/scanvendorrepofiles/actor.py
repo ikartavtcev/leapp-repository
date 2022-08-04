@@ -7,7 +7,8 @@ from leapp.libraries.stdlib import api
 
 class ScanVendorRepofiles(Actor):
     """
-    No documentation has been provided for the scan_vendor_repofiles actor.
+    Load and produce custom repository data from vendor-provided files.
+    Only those vendors whose source system repoids were found on the system will be included.
     """
 
     name = "scan_vendor_repofiles"
